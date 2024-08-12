@@ -37,7 +37,9 @@ class DBStorage:
         host = getenv('HBNB_MYSQL_HOST')
         db = getenv('HBNB_MYSQL_DB')
 
-        self.__engine = create_engine('mysql+mysqldb://{}:{}@{}/{}'
+        self.__engine = create_engine(
+                                      'mysql+mysqldb://{}:{}@{}/{}\
+                                      ?unix_socket=/var/run/mysqld/mysqld.sock'
                                       .format(user, passwd, host, db),
                                       pool_pre_ping=True)
 
@@ -51,7 +53,7 @@ class DBStorage:
         if not self.__session:
             self.reload()
         _objects = {}
-        if type(cls) == str:
+        if type(cls) is str:
             cls = classes_dict.get(cls, None)
         if cls:
             for obj in self.__session.query(cls):
