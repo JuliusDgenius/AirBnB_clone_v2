@@ -8,8 +8,7 @@ from sqlalchemy.orm import relationship
 
 class City(BaseModel, Base):
     """ The city class, contains state ID and name """
-    __tablename__ = 'cities'
-    if getenv("HBNB_MYSQL_STORAGE") == 'db':
+    if getenv("HBNB_TYPE_STORAGE") == 'db':
         __tablename__ = 'cities'
         name = Column(String(128), nullable=False)
         state_id = Column(String(60), ForeignKey('states.id'),
@@ -19,3 +18,7 @@ class City(BaseModel, Base):
     else:
         name = ""
         state_id = ""
+
+    def __init__(self, *args, **kwargs):
+        """ Initialize city object """
+        super().__init__(*args, **kwargs)
