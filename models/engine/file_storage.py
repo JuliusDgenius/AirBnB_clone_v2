@@ -12,7 +12,7 @@ class FileStorage:
         """Returns a dictionary of models currently in storage"""
         if not cls:
             return self.__objects
-        elif type(cls) == str:
+        elif isinstance(str, cls):
             return {k: v for k, v in self.__objects.items()
                     if v.__class__.__name__ == cls}
         else:
@@ -53,7 +53,7 @@ class FileStorage:
             with open(FileStorage.__file_path, 'r') as f:
                 temp = json.load(f)
                 for key, val in temp.items():
-                        self.all()[key] = classes[val['__class__']](**val)
+                    self.all()[key] = classes[val['__class__']](**val)
         except FileNotFoundError:
             pass
 
@@ -70,18 +70,18 @@ class FileStorage:
 
     def get(self, cls, id):
         """ Returns an object """
-        if cls is not None and type(cls) is str and id is not None and\
-            type(id) is str  and cls is in classes:
-                key = cls " '.' + id
-                obj = self.__objects.get(key, None)
-                return obj
+        if cls is not None and type(cls) is str and id is not None and
+        type(id) is str and cls in classes:
+            key = cls + '.' + id
+            obj = self.__objects.get(key, None)
+            return obj
         else:
             return None
 
     def count(self, cls=None):
         """Count number of objects in storage"""
         total = 0
-        if type(cls) == str and cls in classes:
+        if isinstance(str, cls) and cls in classes:
             total = len(self.all(cls))
         elif cls is None:
             total = len(self.__objects)
